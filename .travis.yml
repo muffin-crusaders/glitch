@@ -7,7 +7,7 @@ deploy:
   provider: openshift
   user: aleksuei.riabtsev@ec.gc.ca
   password:
-    secure: ***REMOVED***
+    secure: Nj+m3g6OKVEe1+KJ7bUo2mr4g4LvyqZJBZYbjRZfeT+2+YEE1GhkyyDuWzZgXT3YuhAzpc/kl03xfG6rEmmApUELATziAzrof6HQwjHH1dY5X9QXok6VMl2UcVcNT9bXWuP7cJmxrLRLjeXZZAfxe5Qensh8Gwkp5Nv5GblVFcQJX7pRZI5Lvi0A2ZCP5/AAJXftjct0YpGkWt/6iY2MsCd2IWfxwlrNA6rVJDjdweo+bPuIb+KQ95vTErUVnlHwYwfqen7SK2FlOcUWb5ECiUgC+YKwChJ5BaT5oakQeP+WNhZhyZr1a6yKzp2Uc/Brshzjh0IEN5zmkEzzsxGxrC5pRGXoV+iC4+KEnUGlCKL9aBy1vsYnLcTj+AY5RoLCCxnXYZ3KrJjyCjyrgQJcIsdA0Qbxm1ncDJudGR+O08Juhms+yor+OpjIl/YQPbO5HDPbTVGqepAnFgk8w2sSgH/r6C/wBjGqfxWaaBI1QI/GsiTdVMIIzaMPs8s3uhGYFioJHpDX6f11Q+IEIlz51AoZMJImjTA71MyCB8l4IFL+BJweZ1nYXhxnGcIOChKiWVDYYi8fDdjO9JCDCzrOWIz71gvbbnqoJzCvZjUzSFutmur87GfQVd7jByvhurkdiTfnwiCLapgzB0qBZO4Ew18gxkN4OUKd+A/zB50MSEg=
   app: glitch
   domain: volkit
   on:
