@@ -4,6 +4,13 @@
   "private": true,
   "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
   "description": "beep boop",
+  "keywords": [
+    "Hubot",
+    "OpenShift",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
   "dependencies": {
     "hubot-maps": "0.0.2",
     "hubot-help": "~0.1.1",
@@ -20,6 +27,10 @@
     "hubot-gitter2": "~0.1.3"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "0.10.x",
+    "npm": ">= 1.1.x"
+  },
+  "scripts": {
+    "start": "PORT=$OPENSHIFT_NODEJS_PORT BIND_ADDRESS=$OPENSHIFT_NODEJS_IP HEROKU_URL=$OPENSHIFT_APP_DNS REDIS_URL=redis://:$REDIS_PASSWORD@$OPENSHIFT_REDIS_HOST:$OPENSHIFT_REDIS_PORT HUBOT_GITTER2_TOKEN=***REMOVED*** bin/hubot -n glitch -a gitter2"
   }
 }
