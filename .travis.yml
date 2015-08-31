@@ -1,4 +1,15 @@
 language: node_js
+
 node_js:
-  - "0.12"
-  - "0.10"
+- '0.10'
+
+deploy:
+  provider: openshift
+  user: aleksuei.riabtsev@ec.gc.ca
+  password:
+    secure: KH7b38z1R9wLXaK66E+YHQtH4DMqWbgy9C8SeTmz25SJPphITVHlwlSjxgwiC/NGpDGdnsuBoiTSYKfwPOIotYNZVDBwIVZSIJO1x4LkH9g/Y5NkgnNyMsgf4Y9WR5yH17lB/94IixoEg2lf50eNyEZjaT7OontUojJV2mKLmyRsGNuqkD97ZBVWW+hwCoQdLQyGaJ2eR0EE8iFY8ySMEO05iEBus9mLpUjGSkzJYNbYc6cFxhC76oQNLWMhUbi7PgZoaIfTr2gQzNB7qoqZ1Z4brNY+uWDTswcl0QPj3C5UUoXQP/zKnS8s5umkgWIa0IrTtjNfxTHdJjR4AWz/HOigY9by80GC9qZr2xiVp7px/VD52xNHxGOlI5x30U6hvc1Cz4Ahoy/lXsqMw6vwY6IXTDgtC9FLRWw9t+Fo8517TUTuwbnrYiAeZSG6vatOsR3/IxdwIw74/eSr+a/lonzP6PnIwE0e3Ob91gEMRJ5RbPz99hUeLkNYEwRke8eo1TWVxGAejOWsf0XihKIrrk+1SglUAxh4Mlk/8zrkOyjulymHxs4RumjQFrqBnNVpIwTKVcc4M9dOK8EgCkZu3Y1lrq1Wr+JtnyUaFDAmAUnZSzt5N4VsiNn4tzIhB5l1/l5B24uMC9EJn61hagEhOULg/OcH02rjeQjAHaDmNIU=
+  app: glitch
+  domain: volkit
+  on:
+    repo: muffin-crusaders/glitch
+    branch: master
