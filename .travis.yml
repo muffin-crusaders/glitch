@@ -1,4 +1,15 @@
 language: node_js
+
 node_js:
-  - "0.12"
-  - "0.10"
+- '0.10'
+
+deploy:
+  provider: openshift
+  user: aleksuei.riabtsev@ec.gc.ca
+  password:
+    secure: ***REMOVED***
+  app: glitch
+  domain: volkit
+  on:
+    repo: muffin-crusaders/glitch
+    branch: master
