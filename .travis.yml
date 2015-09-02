@@ -1,15 +1,13 @@
 language: node_js
-
 node_js:
 - '0.10'
-
 deploy:
   provider: openshift
   user: aleksuei.riabtsev@ec.gc.ca
   password:
-    secure: KH7b38z1R9wLXaK66E+YHQtH4DMqWbgy9C8SeTmz25SJPphITVHlwlSjxgwiC/NGpDGdnsuBoiTSYKfwPOIotYNZVDBwIVZSIJO1x4LkH9g/Y5NkgnNyMsgf4Y9WR5yH17lB/94IixoEg2lf50eNyEZjaT7OontUojJV2mKLmyRsGNuqkD97ZBVWW+hwCoQdLQyGaJ2eR0EE8iFY8ySMEO05iEBus9mLpUjGSkzJYNbYc6cFxhC76oQNLWMhUbi7PgZoaIfTr2gQzNB7qoqZ1Z4brNY+uWDTswcl0QPj3C5UUoXQP/zKnS8s5umkgWIa0IrTtjNfxTHdJjR4AWz/HOigY9by80GC9qZr2xiVp7px/VD52xNHxGOlI5x30U6hvc1Cz4Ahoy/lXsqMw6vwY6IXTDgtC9FLRWw9t+Fo8517TUTuwbnrYiAeZSG6vatOsR3/IxdwIw74/eSr+a/lonzP6PnIwE0e3Ob91gEMRJ5RbPz99hUeLkNYEwRke8eo1TWVxGAejOWsf0XihKIrrk+1SglUAxh4Mlk/8zrkOyjulymHxs4RumjQFrqBnNVpIwTKVcc4M9dOK8EgCkZu3Y1lrq1Wr+JtnyUaFDAmAUnZSzt5N4VsiNn4tzIhB5l1/l5B24uMC9EJn61hagEhOULg/OcH02rjeQjAHaDmNIU=
-  app: glitch
+    secure: hHaJVEciXHhPhnQa09qmcZWKzxZIC+NLwZ7cAxn8OpzpRy5eWiJrnfrZGYZ733g22EXa0cI8n8q/7pD35UuRqTHoKl/jJvKZ0hAXJiZx/ngyF2zRLHQ8zY5q9wGLWCFct8KBwnNWIFEBerteY4TYIbSCsAr0gxhQ9Mu0tR3nWK3suYuXJjg8KhVnB6cjqP/TjkKkiuw7P4t50aW60GYtKMFuSMl3jfs2UEa378wVNXUNFUu4inlNsQNJ1HLhUCrfTT/WPrkFrT2v4vM1lnku+h8WA0QFme4fNBdj8I49HVn+igChbsQBQ++xvSziFMUuf1FHRXk8oSKFSS+4oAWj+M1Uviav5AtZ3Nr6L0Q6VoDNU+qENGhm/fCrqRnIO0Mvtomr7I9ZrWQ/Oaw+ly1L/7t3LLBDfdOx6vtSqYMyyHEZLn3TzCoAfvHrcBSpi6TUMiw4VfLWI8yh/9fcLL0Xf1pSs8UFk5/GKo2Ipw6WW/eP7u7SSCvBodXP+OgH1U3QkLPuuh2I+3wrTj6JTrUWLEPJu0bsVaPF6g+t9EhAB9bxyxLWnYt1T8p8dagL5SgLGlrAJQadBJsbsquhSuc/1q8/K5qAuPQ9h4JefFn017V1HnKY2hZSvMgIKGcfL+g3KZ5UU5n4OkNGpd28KCtOk6E9MtofcY7jVFN0tlkDMW8=
+  app: hutest
   domain: volkit
   on:
-    repo: muffin-crusaders/glitch
+    repo: AleksueiR/glitch
     branch: master
