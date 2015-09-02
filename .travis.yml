@@ -9,4 +9,5 @@ deploy:
   app: hutest
   domain: volkit
   on:
+    repo: AleksueiR/glitch
     branch: redis
