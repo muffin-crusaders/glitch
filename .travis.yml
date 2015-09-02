@@ -10,4 +10,4 @@ deploy:
   domain: volkit
   on:
     repo: AleksueiR/glitch
-    branch: heads/ar/redis
+    branch: redis
