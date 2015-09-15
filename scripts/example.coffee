@@ -15,6 +15,10 @@ module.exports = (robot) ->
     robot.hear /\benhance\b/i, (res) ->
         res.send "![](http://i.giphy.com/10nMEclFWTPCp2.gif)"
 
+    robot.hear /\bwho\b/i, (res) ->
+        res.send "azure bot"
+
+
     fiftyfifty = ["I'd give that a 50/50.", "Hmmm, 50/50?", "That's simple... 50/50.", "50/50 is my best guess."]
     robot.hear /\bodds (on|of|for)\b|\bwhat are the (chances|odds)\b|\bknow the (chances|odds)\b/i, (res) ->
         res.send res.random fiftyfifty
