@@ -25,7 +25,8 @@
         "hubot-rules": "~0.1.1",
         "hubot-scripts": "~2.16.2",
         "hubot-shipit": "~0.2.0",
-        "hubot-pr": "git://github.com/bouzuya/hubot-pr.git#master"
+        "hubot-pr": "git://github.com/bouzuya/hubot-pr.git#master",
+        "cloudinary": "^1.2.4"
     },
     "engines": {
         "node": "0.10.32",
