@@ -7,15 +7,16 @@ cloudinary.config
     api_secret: process.env.HUBOT_CLOUDINARY_API_SECRET
 
 roomNames = [
-    {name: 'AleksueiR/CyberTests'}
-    {name: 'fgpv-vpgf/fgpv-vpgf'}
-    {name: 'fgpv-vpgf/Scrum'}
-    {name: 'fgpv-vpgf'}
+    #{name: 'AleksueiR/CyberTests'}
+    #{name: 'fgpv-vpgf/fgpv-vpgf'}
+    #{name: 'fgpv-vpgf/Scrum'}
+    #{name: 'fgpv-vpgf'}
 ]
 
-console.log(process.env.HUBOT_CLOUDINARY_NAME, process.env.HUBOT_CLOUDINARY_API_KEY, process.env.HUBOT_CLOUDINARY_API_SECRET)
+#console.log(process.env.HUBOT_CLOUDINARY_NAME, process.env.HUBOT_CLOUDINARY_API_KEY, process.env.HUBOT_CLOUDINARY_API_SECRET)
 
 module.exports = (robot) ->
+    return
 
     options =
         hostname: 'api.gitter.im',
