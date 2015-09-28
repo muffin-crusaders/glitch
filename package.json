@@ -1,37 +1,37 @@
 {
-  "name": "glitch",
-  "version": "0.0.0",
-  "private": true,
-  "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
-  "description": "beep boop",
-  "keywords": [
-    "Hubot",
-    "OpenShift",
-    "Node.js",
-    "application",
-    "openshift"
-  ],
-  "dependencies": {
-    "hubot": "~2.15.0",
-    "hubot-brain-inspect": "0.0.1",
-    "hubot-diagnostics": "0.0.1",
-    "hubot-gitter2": "~0.1.3",
-    "hubot-google-images": "~0.1.5",
-    "hubot-google-translate": "~0.2.0",
-    "hubot-help": "~0.1.1",
-    "hubot-heroku-keepalive": "0.0.4",
-    "hubot-maps": "0.0.2",
-    "hubot-pugme": "~0.1.0",
-    "hubot-redis-brain": "0.0.3",
-    "hubot-rules": "~0.1.1",
-    "hubot-scripts": "~2.16.2",
-    "hubot-shipit": "~0.2.0"
-  },
-  "engines": {
-    "node": "0.10.x",
-    "npm": ">= 1.1.x"
-  },
-  "scripts": {
-    "start": "PORT=$OPENSHIFT_NODEJS_PORT BIND_ADDRESS=$OPENSHIFT_NODEJS_IP HEROKU_URL=$OPENSHIFT_APP_DNS REDIS_URL=redis://:$REDIS_PASSWORD@$OPENSHIFT_REDIS_HOST:$OPENSHIFT_REDIS_PORT HUBOT_GITTER2_TOKEN=dde0a673dc3aea11942c68c39c968c67a340668a bin/hubot -n glitch -a gitter2"
-  }
+    "name": "glitch",
+    "version": "0.0.0",
+    "private": true,
+    "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
+    "description": "beep boop",
+    "keywords": [
+        "Hubot",
+        "Node.js",
+        "application"
+    ],
+    "dependencies": {
+        "coffee-script": "^1.10.0",
+        "hubot": "~2.15.0",
+        "hubot-brain-inspect": "0.0.1",
+        "hubot-diagnostics": "0.0.1",
+        "hubot-gitter2": "muffin-crusaders/hubot-gitter2#develop",
+        "hubot-google-images": "~0.1.5",
+        "hubot-google-translate": "~0.2.0",
+        "hubot-help": "~0.1.1",
+        "hubot-heroku-keepalive": "0.0.4",
+        "hubot-maps": "0.0.2",
+        "hubot-pugme": "~0.1.0",
+        "hubot-redis-brain": "0.0.3",
+        "hubot-rules": "~0.1.1",
+        "hubot-scripts": "~2.16.2",
+        "hubot-shipit": "~0.2.0",
+        "hubot-pr": "git://github.com/bouzuya/hubot-pr.git#master",
+        "cloudinary": "^1.2.4",
+        "node-gitter": "^1.2.8",
+        "sprintf-js": "^1.0.3"
+    },
+    "engines": {
+        "node": "0.10.32",
+        "npm": ">= 1.1.x"
+    }
 }
