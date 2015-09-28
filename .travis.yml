@@ -1,13 +1,3 @@
 language: node_js
 node_js:
-- '0.10'
-deploy:
-  provider: openshift
-  user: aleksuei.riabtsev@ec.gc.ca
-  password:
-    secure: hHaJVEciXHhPhnQa09qmcZWKzxZIC+NLwZ7cAxn8OpzpRy5eWiJrnfrZGYZ733g22EXa0cI8n8q/7pD35UuRqTHoKl/jJvKZ0hAXJiZx/ngyF2zRLHQ8zY5q9wGLWCFct8KBwnNWIFEBerteY4TYIbSCsAr0gxhQ9Mu0tR3nWK3suYuXJjg8KhVnB6cjqP/TjkKkiuw7P4t50aW60GYtKMFuSMl3jfs2UEa378wVNXUNFUu4inlNsQNJ1HLhUCrfTT/WPrkFrT2v4vM1lnku+h8WA0QFme4fNBdj8I49HVn+igChbsQBQ++xvSziFMUuf1FHRXk8oSKFSS+4oAWj+M1Uviav5AtZ3Nr6L0Q6VoDNU+qENGhm/fCrqRnIO0Mvtomr7I9ZrWQ/Oaw+ly1L/7t3LLBDfdOx6vtSqYMyyHEZLn3TzCoAfvHrcBSpi6TUMiw4VfLWI8yh/9fcLL0Xf1pSs8UFk5/GKo2Ipw6WW/eP7u7SSCvBodXP+OgH1U3QkLPuuh2I+3wrTj6JTrUWLEPJu0bsVaPF6g+t9EhAB9bxyxLWnYt1T8p8dagL5SgLGlrAJQadBJsbsquhSuc/1q8/K5qAuPQ9h4JefFn017V1HnKY2hZSvMgIKGcfL+g3KZ5UU5n4OkNGpd28KCtOk6E9MtofcY7jVFN0tlkDMW8=
-  app: hutest
-  domain: volkit
-  on:
-    repo: AleksueiR/glitch
-    branch: master
+    - '0.10'
