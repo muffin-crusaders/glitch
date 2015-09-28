@@ -5,7 +5,6 @@ vsprintf = require('sprintf-js').vsprintf
 roomNames = [
     'AleksueiR/CyberTests'
     'fgpv-vpgf'
-    'fgpv-vpgf/fgpv-vpgf'
     'fgpv-vpgf/gulp-i18n-csv'
     'fgpv-vpgf/Scrum'
 ]
