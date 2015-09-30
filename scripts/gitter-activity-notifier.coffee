@@ -2,12 +2,9 @@ Gitter = require('node-gitter')
 sprintf = require('sprintf-js').sprintf
 vsprintf = require('sprintf-js').vsprintf
 
-roomNames = [
-    'AleksueiR/CyberTests'
-    'fgpv-vpgf'
-    'fgpv-vpgf/gulp-i18n-csv'
-    'fgpv-vpgf/Scrum'
-]
+roomNames = process.env.GITTER_ACTIVITY_FUNNEL.split('|')
+
+console.log(roomNames)
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
