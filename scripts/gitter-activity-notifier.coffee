@@ -2,7 +2,7 @@ Gitter = require('node-gitter')
 sprintf = require('sprintf-js').sprintf
 vsprintf = require('sprintf-js').vsprintf
 
-roomNames = process.env.GITTER_ACTIVITY_FUNNEL.split('|')
+roomNames = (process.env.GITTER_ACTIVITY_FUNNEL || '').split('|')
 
 console.log(roomNames)
 
@@ -71,24 +71,24 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
             #message = vsprintf('@%1$s commented in [%2$s](https://github.com/%2$s/) on issue %2$s#%4$s', m)
-            message = commentimg + vsprintf('@%1$s commented on issue %2$s#%4$s', m)
+            message = commentimg + vsprintf('%1$s commented on issue %2$s#%4$s', m)
         else if issue.test text
             m = text.match issue
             m.shift(1)
             console.log(m)
             #message = vsprintf('@%1$s %2$s an issue in [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
-            message = infoimg + vsprintf('@%1$s %2$s an issue: %3$s#%5$s', m)
+            message = infoimg + vsprintf('%1$s %2$s an issue: %3$s#%5$s', m)
         else if pr.test text
             m = text.match pr
             m.shift(1)
             console.log(m)
             #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
-            message = primg + vsprintf('@%1$s %2$s a Pull Request: %3$s#%5$s', m)
+            message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s', m)
         else if commit.test text
             m = text.match commit
             m.shift(1)
             console.log(m)
-            message = pushimg + vsprintf('@%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
+            message = pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
 
         console.log('-->', message)
         if message != ''
