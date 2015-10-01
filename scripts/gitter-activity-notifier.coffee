@@ -49,16 +49,16 @@ module.exports = (robot) ->
         message = ''
         #console.log('reposting', text)
 
-        comment = /\[Github\] (\w+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
+        comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
 
-        issue = /\[Github\] (\w+) (closed|opened|reopened|assigned|labeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
-        pr = /\[Github\] (\w+) (opened|closed|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; prname:4; prid: 5;
 
-        commit = /\[Github\] (\w+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
+        commit = /\[Github\] (\w[\w-]+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
         # name:1; commits:2; reponame:3; compare:4;
 
         primg = '![](https://cdn0.iconfinder.com/data/icons/octicons/1024/git-pull-request-16.png)&nbsp;&nbsp;'
