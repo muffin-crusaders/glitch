@@ -9,5 +9,6 @@
   "hubot-azure-scripts/brain/storage-blob-brain",
   "hubot-rules",
   "hubot-shipit",
-  "hubot-pr"
+  "hubot-pr",
+  "hubot-scrumminator"
 ]
