@@ -83,7 +83,7 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
             #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
-            message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s', m)
+            message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
         else if commit.test text
             m = text.match commit
             m.shift(1)
