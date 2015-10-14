@@ -67,10 +67,18 @@ module.exports = (robot) ->
         commit = /\[Github\] (\w[\w-]+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
         # name:1; commits:2; reponame:3; compare:4;
 
+        ###
         primg = '![](https://cdn0.iconfinder.com/data/icons/octicons/1024/git-pull-request-16.png)&nbsp;&nbsp;'
         commentimg = '![](https://cdn0.iconfinder.com/data/icons/octicons/1024/comment-16.png)&nbsp;&nbsp;'
         infoimg = '![](https://cdn0.iconfinder.com/data/icons/octicons/1024/info-16.png)&nbsp;&nbsp;'
         pushimg = '![](https://cdn0.iconfinder.com/data/icons/octicons/1024/repo-push-16.png)&nbsp;&nbsp;'
+        ###
+
+        primg = '![](https://goo.gl/hjqlaA)&nbsp;&nbsp;'
+        commentimg = '![](https://goo.gl/8IdEJl)&nbsp;&nbsp;'
+        infoimg = '![](https://goo.gl/9bHFwO)&nbsp;&nbsp;'
+        pushimg = '![](https://goo.gl/UHCtHx)&nbsp;&nbsp;'
+
 
         if comment.test text
             m = text.match comment
