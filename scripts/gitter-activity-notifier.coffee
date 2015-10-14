@@ -8,6 +8,9 @@ console.log(roomNames)
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
+    store = {}
+    timeoutHandle = null
+    timeoutDuration = 3000
 
     for roomName in roomNames
         #console.log(roomName)
@@ -34,6 +37,8 @@ module.exports = (robot) ->
 
             console.log('room id', room.name, room.id)
 
+            store[room.id] = []
+
             events.on('snapshot', (snapshot) ->
                 console.log(snapshot.length + ' messages in the snapshot');
             )
@@ -41,13 +46,14 @@ module.exports = (robot) ->
             events.on('events', (message) ->
                 console.log('A message was ' + message.operation);
                 console.log('Text: ', message.model.text);
-                repost(room.id, message.model.text)
+                parseMessage(room.id, message.model.text)
             )
         )
 
-    repost = (roomid, text) ->
+    parseMessage = (roomid, text) ->
         message = ''
-        #console.log('reposting', text)
+
+        clearTimeout timeoutHandle
 
         comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
@@ -90,10 +96,23 @@ module.exports = (robot) ->
             console.log(m)
             message = pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
 
-        console.log('-->', message)
+        console.log(' -->', message)
+
+        # store message and wait in case new messages come soon
         if message != ''
-            robot.send
-                room: roomid
-                message
+           store[roomid].push message
+           timeoutHandle = setTimeout repostMessage, timeoutDuration, roomid
+           console.log(' ---> timeout handle', timeoutHandle)
+
+    # when timeout resolves, repost all captured messages
+    repostMessage = (roomid) ->
+
+        console.log(' ---> time out; reposting', roomid)
+
+        robot.send
+            room: roomid
+            store[roomid].join '\n'
+
+        store[roomid] = []
 
     return
