@@ -10,7 +10,7 @@ module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
     store = {}
     timeoutHandle = null
-    timeoutDuration = 4000
+    timeoutDuration = process.env.GITTER_ACTIVITY_FUNNEL_DELAY || 10000;
 
     primg = '![](https://goo.gl/hjqlaA)&nbsp;&nbsp;'
     commentimg = '![](https://goo.gl/8IdEJl)&nbsp;&nbsp;'
@@ -64,7 +64,8 @@ module.exports = (robot) ->
     # help!
     helper = (items, id, prop, value, parts) ->
 
-        if items[id] and items[id][prop].indexOf(value) == -1
+        # split to prevent matching 'label' in 'unlabel'
+        if items[id] and items[id][prop].split(',').indexOf(value) == -1
             items[id][prop] += ',' + value
         # add new notification
         else
@@ -81,7 +82,7 @@ module.exports = (robot) ->
         issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled|unlabeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
-        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize|assigned|unassigned|labeled|unlabeled) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; prname:4; prid: 5;
 
         commit = /\[Github\] (\w[\w-]+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
@@ -131,7 +132,7 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
 
-            helper(store[roomid].issue, m[0] + m[4], 1, m[1], m)
+            helper(store[roomid].pr, m[0] + m[4], 1, m[1], m)
 
             #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
             #message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
@@ -140,7 +141,7 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
 
-            items[m[0] + m[1] + m[2]] = parts
+            store[roomid].commit[m[0] + m[1] + m[2]] = m
 
             #message = pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
 
