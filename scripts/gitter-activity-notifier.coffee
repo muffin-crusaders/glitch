@@ -10,7 +10,7 @@ module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
     store = {}
     timeoutHandle = null
-    timeoutDuration = 4000
+    timeoutDuration = process.env.GITTER_ACTIVITY_FUNNEL_DELAY || 10000;
 
     primg = '![](https://goo.gl/hjqlaA)&nbsp;&nbsp;'
     commentimg = '![](https://goo.gl/8IdEJl)&nbsp;&nbsp;'
