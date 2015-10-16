@@ -131,7 +131,7 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
 
-            helper(store[roomid].issue, m[0] + m[4], 1, m[1], m)
+            helper(store[roomid].pr, m[0] + m[4], 1, m[1], m)
 
             #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
             #message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
@@ -140,7 +140,7 @@ module.exports = (robot) ->
             m.shift(1)
             console.log(m)
 
-            items[m[0] + m[1] + m[2]] = parts
+            store[roomid].commit[m[0] + m[1] + m[2]] = m
 
             #message = pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
 
