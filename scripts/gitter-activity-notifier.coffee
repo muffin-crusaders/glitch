@@ -64,7 +64,8 @@ module.exports = (robot) ->
     # help!
     helper = (items, id, prop, value, parts) ->
 
-        if items[id] and items[id][prop].indexOf(value) == -1
+        # split to prevent matching 'label' in 'unlabel'
+        if items[id] and items[id][prop].split(',').indexOf(value) == -1
             items[id][prop] += ',' + value
         # add new notification
         else
