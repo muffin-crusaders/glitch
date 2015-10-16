@@ -81,7 +81,7 @@ module.exports = (robot) ->
         issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled|unlabeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
-        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize|assigned|unassigned|labeled|unlabeled) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; prname:4; prid: 5;
 
         commit = /\[Github\] (\w[\w-]+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
