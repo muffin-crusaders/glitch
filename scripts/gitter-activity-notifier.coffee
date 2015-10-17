@@ -73,9 +73,8 @@ module.exports = (robot) ->
 
     parseMessage = (roomid, text) ->
         message = ''
-
-        clearTimeout timeoutHandle
-
+        flag = true
+        
         comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
 
@@ -144,14 +143,20 @@ module.exports = (robot) ->
             store[roomid].commit[m[0] + m[1] + m[2]] = m
 
             #message = pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', m)
+        else
+            flag = false
 
         console.log(' -->', message)
 
         # store message and wait in case new messages come soon
         #if message != ''
            #store[roomid].push message
-        timeoutHandle = setTimeout repostMessage, timeoutDuration, roomid
-        console.log(' ---> timeout handle', timeoutHandle)
+           
+        # start timeout if the message was accepted
+        if flag
+            clearTimeout timeoutHandle
+            timeoutHandle = setTimeout repostMessage, timeoutDuration, roomid
+            console.log(' ---> timeout handle', timeoutHandle)
 
     # add 'and' between workd is needed
     andify = (string) ->
