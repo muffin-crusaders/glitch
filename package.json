@@ -1,38 +1,39 @@
 {
-    "name": "glitch",
-    "version": "0.0.0",
-    "private": true,
-    "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
-    "description": "beep boop",
-    "keywords": [
-        "Hubot",
-        "Node.js",
-        "application"
-    ],
-    "dependencies": {
-        "cloudinary": "^1.2.4",
-        "coffee-script": "^1.10.0",
-        "github": "^0.2.4",
-        "hubot": "~2.15.0",
-        "hubot-azure-scripts": "git://github.com/muffin-crusaders/hubot-azure-scripts.git#master",
-        "hubot-brain-inspect": "0.0.1",
-        "hubot-diagnostics": "0.0.1",
-        "hubot-gitter2": "muffin-crusaders/hubot-gitter2#develop",
-        "hubot-google-images": "~0.1.5",
-        "hubot-google-translate": "~0.2.0",
-        "hubot-help": "~0.1.1",
-        "hubot-maps": "0.0.2",
-        "hubot-pr": "git://github.com/bouzuya/hubot-pr.git#master",
-        "hubot-pugme": "~0.1.0",
-        "hubot-rules": "~0.1.1",
-        "hubot-scripts": "~2.16.2",
-        "hubot-scrumminator": "*",
-        "hubot-shipit": "~0.2.0",
-        "node-gitter": "^1.2.8",
-        "sprintf-js": "^1.0.3"
-    },
-    "engines": {
-        "node": "4.1",
-        "npm": ">= 1.1.x"
-    }
+  "name": "glitch",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
+  "description": "beep boop",
+  "keywords": [
+    "Hubot",
+    "Node.js",
+    "application"
+  ],
+  "dependencies": {
+    "cloudinary": "^1.2.4",
+    "coffee-script": "^1.10.0",
+    "github": "^0.2.4",
+    "hubot": "~2.15.0",
+    "hubot-azure-scripts": "git://github.com/muffin-crusaders/hubot-azure-scripts.git#master",
+    "hubot-brain-inspect": "0.0.1",
+    "hubot-diagnostics": "0.0.1",
+    "hubot-gitter2": "muffin-crusaders/hubot-gitter2#develop",
+    "hubot-google-images": "~0.1.5",
+    "hubot-google-translate": "~0.2.0",
+    "hubot-help": "~0.1.1",
+    "hubot-maps": "0.0.2",
+    "hubot-pr": "git://github.com/bouzuya/hubot-pr.git#master",
+    "hubot-pugme": "~0.1.0",
+    "hubot-rules": "~0.1.1",
+    "hubot-scripts": "~2.16.2",
+    "hubot-scrumminator": "*",
+    "hubot-shipit": "~0.2.0",
+    "jsonfile": "^2.2.3",
+    "node-gitter": "^1.2.8",
+    "sprintf-js": "^1.0.3"
+  },
+  "engines": {
+    "node": "4.1",
+    "npm": ">= 1.1.x"
+  }
 }
