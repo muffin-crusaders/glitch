@@ -26,7 +26,7 @@
     "hubot-pugme": "~0.1.0",
     "hubot-rules": "~0.1.1",
     "hubot-scripts": "~2.16.2",
-    "hubot-scrumminator": "^0.0.4",
+    "hubot-scrumminator": ">=0.0.4",
     "hubot-shipit": "~0.2.0",
     "jsonfile": "^2.2.3",
     "node-gitter": "^1.2.8",
