@@ -15,13 +15,19 @@ module.exports = (robot) ->
     robot.hear /\bodds (on|of|for)\b|\bwhat are the (chances|odds)\b|\bknow the (chances|odds)\b/i, (res) ->
         res.send res.random fiftyfifty
 
-    robot.respond /version (.*)/i, (res) ->
-        pkg = res.match[1]
+    robot.respond /version( (.*)|)/i, (res) ->
+        pkg = res.match[2]
         if pkg
             jsonfile.readFile 'node_modules/' + pkg + '/package.json', (err, obj) ->
                 if err
-                    res.send 'Could not find that package'
-                    console.log err
+                    jsonfile.readFile 'node_modules/hubot-' + pkg + '/package.json', (err, obj) ->
+                        if err
+                            res.send 'Could not find that package'
+                            console.log err
+                            return
+                        version = obj.version
+                        if version
+                            res.send pkg + ' is at version ' + version
                     return
                 version = obj.version
                 if version
