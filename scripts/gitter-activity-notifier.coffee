@@ -3,6 +3,7 @@ sprintf = require('sprintf-js').sprintf
 vsprintf = require('sprintf-js').vsprintf
 
 roomNames = (process.env.GITTER_ACTIVITY_FUNNEL || '').split('|')
+notificationRoom = process.env.GITTER_ACTIVITY_TARGET || 'same';
 
 console.log(roomNames)
 
@@ -60,6 +61,9 @@ module.exports = (robot) ->
                 parseMessage(room.id, message.model.text)
             )
         )
+
+        if notificationRoom != 'same'
+             gitter.rooms.join(notificationRoom)
 
     # help!
     helper = (items, id, prop, value, parts) ->
@@ -199,9 +203,12 @@ module.exports = (robot) ->
             console.log(commitid, parts)
             messages.push(pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', parts))
 
+        # funnel notification to a single room is specified; otherwise post to the event origin room
+        target = if notificationRoom == 'same' then roomid else notificationRoom
+
         # join different types of messages
         robot.send
-            room: roomid
+            room: target
             messages.join('\n')
 
         console.log store[roomid]
