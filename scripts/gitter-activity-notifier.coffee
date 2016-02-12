@@ -17,7 +17,8 @@ module.exports = (robot) ->
     commentimg = '![](https://goo.gl/8IdEJl)&nbsp;&nbsp;'
     infoimg = '![](https://goo.gl/9bHFwO)&nbsp;&nbsp;'
     pushimg = '![](https://goo.gl/UHCtHx)&nbsp;&nbsp;'
-
+    travisOk = '![](https://goo.gl/0i3kmz)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/ok.png
+    travisBroken = '![](https://goo.gl/4RUx7z)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/mail-delete.png
 
     for roomName in roomNames
         #console.log(roomName)
@@ -49,6 +50,8 @@ module.exports = (robot) ->
                 issue: {}
                 pr: {}
                 commit: {}
+                prDelay: {}
+                travis: {}
             }
 
             events.on('snapshot', (snapshot) ->
@@ -78,15 +81,19 @@ module.exports = (robot) ->
     parseMessage = (roomid, text) ->
         message = ''
         flag = true
-        
+
         comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
 
         issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled|unlabeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
-        pr = /\[Github\] (\w[\w-]+) (opened|closed|reopened|synchronize|assigned|unassigned|labeled|unlabeled) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        pr = /\[Github\] (\w[\w-]+) (closed|assigned|unassigned|labeled|unlabeled) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        prDelay = /\[Github\] (\w[\w-]+) (opened|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; prname:4; prid: 5;
+
+        travis = /Travis (.+?\/.+?)#(\d+) \[(passed|broken)\]\((http.*?)\) \((\d+)\)/
+        # reponame:1; issueid:2; status:3; travisurl:4; buildid:5
 
         commit = /\[Github\] (\w[\w-]+) pushed (\d+) commit\(s\) to (.+?\/.+?) (http.*)/
         # name:1; commits:2; reponame:3; compare:4;
@@ -139,6 +146,35 @@ module.exports = (robot) ->
 
             #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
             #message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
+
+        else if prDelay.test text
+            m = text.match prDelay
+            m.shift(1)
+            console.log(m)
+
+            #helper(store[roomid].prDelay, m[0] + m[4], 1, m[1], m)
+            store[roomid].prDelay[m[4]] = m
+
+            #console.log(store[roomid].prDelay[m[4]])
+
+            #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
+            #message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
+
+            flag = false # skip outputting messages about opened pr; wait for travis to reply
+
+        else if travis.test text
+            m = text.match travis
+            m.shift(1)
+            console.log(m)
+
+            #helper(store[roomid].travis, m[0] + m[4], 1, m[1], m)
+            store[roomid].travis[m[1]] = m
+
+            #console.log(store[roomid].travis[m[1]])
+
+            #message = vsprintf('@%1$s %2$s a Pull Request to [%3$s](https://github.com/%3$s/): %3$s#%5$s', m)
+            #message = primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', m)
+
         else if commit.test text
             m = text.match commit
             m.shift(1)
@@ -155,7 +191,7 @@ module.exports = (robot) ->
         # store message and wait in case new messages come soon
         #if message != ''
            #store[roomid].push message
-           
+
         # start timeout if the message was accepted
         if flag
             clearTimeout timeoutHandle
@@ -199,6 +235,22 @@ module.exports = (robot) ->
             parts[1] = andify parts[1]
             messages.push(primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', parts))
 
+        for travisid, parts of store[roomid].travis
+            console.log(travisid, parts)
+
+            prDelayParts = store[roomid].prDelay[travisid]
+            if prDelayParts
+                parts.push(prDelayParts[0])
+                messages.push(primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', prDelayParts))
+                store[roomid].prDelay[travisid] = undefined # null delayed pr message
+            else
+                parts.push('Someone')
+
+            if parts[2] == 'passed'
+                messages.push(travisOk + vsprintf('Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) has __passed__: [Travis %5$s](%4$s)', parts))
+            else
+                messages.push(travisBroken + vsprintf('%6$s owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
+
         for commitid, parts of store[roomid].commit
             console.log(commitid, parts)
             messages.push(pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', parts))
@@ -214,11 +266,10 @@ module.exports = (robot) ->
         console.log store[roomid]
 
         # clear store
-        store[roomid] = {
-            comment: {}
-            issue: {}
-            pr: {}
-            commit: {}
-        }
+        store[roomid].comment = {}
+        store[roomid].issue = {}
+        store[roomid].pr = {}
+        store[roomid].commit = {}
+        store[roomid].travis = {}
 
     return
