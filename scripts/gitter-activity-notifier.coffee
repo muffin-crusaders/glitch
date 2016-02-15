@@ -84,11 +84,12 @@ module.exports = (robot) ->
 
         comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
-
+        
         issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled|unlabeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
-        pr = /\[Github\] (\w[\w-]+) (closed|assigned|unassigned|labeled|unlabeled) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
+        # remove `assigned|unassigned|labeled|unlabeled` from tracked pr actions
+        pr = /\[Github\] (\w[\w-]+) (closed) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         prDelay = /\[Github\] (\w[\w-]+) (opened|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; prname:4; prid: 5;
 
