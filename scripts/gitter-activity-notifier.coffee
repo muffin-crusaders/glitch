@@ -59,7 +59,7 @@ module.exports = (robot) ->
             )
 
             events.on('events', (message) ->
-                console.log('A message was ' + message.operation);
+                console.log('A message was ' + message.operation + ' in room ' + room.id);
                 console.log('Text: ', message.model.text);
                 parseMessage(room.id, message.model.text)
             )
@@ -84,7 +84,7 @@ module.exports = (robot) ->
 
         comment = /\[Github\] (\w[\w-]+) commented in (.+?\/.+?) on issue: (.*?) http.*?\/(\d+)#.*/
         # name:1; reponame:2; issuename:3; issueid:4
-        
+
         issue = /\[Github\] (\w[\w-]+) (closed|opened|reopened|assigned|unassigned|labeled|unlabeled) an issue in (.+?\/.+?): (.*?) http.*?\/(\d+)/
         # name:1; action:2; reponame:3; issuename:4; issueid:5
 
@@ -197,7 +197,7 @@ module.exports = (robot) ->
         if flag
             clearTimeout timeoutHandle
             timeoutHandle = setTimeout repostMessage, timeoutDuration, roomid
-            console.log(' ---> timeout handle', timeoutHandle)
+            console.log(' ---> timeout handle')
 
     # add 'and' between workd is needed
     andify = (string) ->
@@ -264,7 +264,7 @@ module.exports = (robot) ->
             room: target
             messages.join('\n')
 
-        console.log store[roomid]
+        console.log(roomid, store[roomid])
 
         # clear store
         store[roomid].comment = {}
