@@ -275,11 +275,11 @@ module.exports = (robot) ->
             if parts[2] == 'passed'
                 messages.push(travisOk + vsprintf('Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) has __passed__: [Travis %5$s](%4$s)', parts))
             else
-                messages.push(travisBroken + vsprintf('%6$s owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
+                messages.push(travisBroken + vsprintf('`%6$s` owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
 
         for commitid, parts of store[roomid].commit
             console.log(commitid, parts)
-            messages.push(pushimg + vsprintf('%1$s pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', parts))
+            messages.push(pushimg + vsprintf('`%1$s` pushed %2$s commit(s) to [%3$s](https://github.com/%3$s/): [\[compare\]](%4$s)', parts))
 
         # funnel notification to a single room is specified; otherwise post to the event origin room
         target = if notificationRoom == 'same' then roomid else notificationRoom
