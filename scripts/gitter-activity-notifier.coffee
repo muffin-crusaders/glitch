@@ -1,6 +1,7 @@
 Gitter = require('node-gitter')
 sprintf = require('sprintf-js').sprintf
 vsprintf = require('sprintf-js').vsprintf
+request = require('request')
 
 roomNames = (process.env.GITTER_ACTIVITY_FUNNEL || '').split('|')
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET || 'same';
@@ -91,7 +92,7 @@ module.exports = (robot) ->
         # remove `assigned|unassigned|labeled|unlabeled` from tracked pr actions
         pr = /\[Github\] (\w[\w-]+) (closed) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
         prDelay = /\[Github\] (\w[\w-]+) (opened|reopened|synchronize) a Pull Request to (.+?\/.+?): (.*?) http.*?\/(\d+)/
-        # name:1; action:2; reponame:3; prname:4; prid: 5;
+        # name:1; action:2; reponame:3; prname:4; prid: 5; demourl: 6
 
         travis = /Travis (.+?\/.+?)#(\d+) \[(passed|broken)\]\((http.*?)\) \((\d+)\)/
         # reponame:1; issueid:2; status:3; travisurl:4; buildid:5
@@ -151,10 +152,35 @@ module.exports = (robot) ->
         else if prDelay.test text
             m = text.match prDelay
             m.shift(1)
-            console.log(m)
+
+            url = 'https://api.github.com/repos/' + m[2] + '/pulls/' + m[4]
+            console.log url
+
+            # try to get branch name
+            request {
+                headers: 'User-Agent': 'request'
+                url: url
+            }, (error, response, body) ->
+                if !error and response.statusCode == 200
+                    fbResponse = JSON.parse(body)
+                    branchName = fbResponse.head.ref
+                    user = fbResponse.head.user.login
+                    demourl = 'http://fgpv.cloudapp.net/demo/users/' + user + '/' + branchName + '/samples/index-one.html'
+                    console.log demourl
+
+                    # demo urls are only constructed for fgpv-vpgf repos
+                    if v.indexOf('/fgpv-vpgf') != -1
+                        m.push demourl
+                else
+                    console.log 'Got an error: ', error, ', status code: ', response.statusCode
+                return
+
+                store[roomid].prDelay[m[4]] = m
+                console.log(m)
 
             #helper(store[roomid].prDelay, m[0] + m[4], 1, m[1], m)
-            store[roomid].prDelay[m[4]] = m
+
+            ##### -> store[roomid].prDelay[m[4]] = m
 
             #console.log(store[roomid].prDelay[m[4]])
 
