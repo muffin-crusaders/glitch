@@ -164,16 +164,15 @@ module.exports = (robot) ->
                 if !error and response.statusCode == 200
                     fbResponse = JSON.parse(body)
                     branchName = fbResponse.head.ref
-                    user = fbResponse.head.user.login
+                    user = fbResponse.user.login
                     demourl = 'http://fgpv.cloudapp.net/demo/users/' + user + '/' + branchName + '/samples/index-one.html'
-                    console.log demourl
+                    console.log 'Demo url', demourl, m[2], m[2].indexOf('/fgpv-vpgf')
 
                     # demo urls are only constructed for fgpv-vpgf repos
-                    if v.indexOf('/fgpv-vpgf') != -1
+                    if m[2].indexOf('/fgpv-vpgf') != -1
                         m.push demourl
                 else
                     console.log 'Got an error: ', error, ', status code: ', response.statusCode
-                return
 
                 store[roomid].prDelay[m[4]] = m
                 console.log(m)
@@ -249,18 +248,18 @@ module.exports = (robot) ->
         for commentid, parts of store[roomid].comment
             console.log(commentid, parts)
             parts[0] = andify parts[0]
-            messages.push(commentimg + vsprintf('%1$s commented on issue %2$s#%4$s', parts))
+            messages.push(commentimg + vsprintf('`%1$s` commented on the "__%3$s__" issue: %2$s#%4$s', parts))
 
         # construct comment messages
         for issueid, parts of store[roomid].issue
             console.log(issueid, parts)
             parts[1] = andify parts[1]
-            messages.push(infoimg + vsprintf('%1$s %2$s an issue: %3$s#%5$s', parts))
+            messages.push(infoimg + vsprintf('`%1$s` %2$s the "__%4$s__" issue: %3$s#%5$s', parts))
 
         for prid, parts of store[roomid].pr
             console.log(prid, parts)
             parts[1] = andify parts[1]
-            messages.push(primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', parts))
+            messages.push(primg + vsprintf('`%1$s` %2$s the "__%4$s__" Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', parts))
 
         for travisid, parts of store[roomid].travis
             console.log(travisid, parts)
@@ -268,7 +267,7 @@ module.exports = (robot) ->
             prDelayParts = store[roomid].prDelay[travisid]
             if prDelayParts
                 parts.push(prDelayParts[0])
-                messages.push(primg + vsprintf('%1$s %2$s a Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', prDelayParts))
+                messages.push(primg + vsprintf('`%1$s` %2$s the "__%4$s__" Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s); [Demo](%6$s)', prDelayParts))
                 store[roomid].prDelay[travisid] = undefined # null delayed pr message
             else
                 parts.push('Someone')
