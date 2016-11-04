@@ -30,6 +30,7 @@
     "hubot-shipit": "~0.2.0",
     "jsonfile": "^2.2.3",
     "node-gitter": "^1.2.8",
+    "python-shell": "^0.4.0",
     "request": "^2.72.0",
     "sprintf-js": "^1.0.3"
   },

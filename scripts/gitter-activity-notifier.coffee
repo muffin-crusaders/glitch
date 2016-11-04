@@ -3,6 +3,10 @@ sprintf = require('sprintf-js').sprintf
 vsprintf = require('sprintf-js').vsprintf
 request = require('request')
 
+# importing a regular JS file because I don't care for coffee anymore
+path = require('path')
+glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HUBOT_PR_TOKEN)
+
 roomNames = (process.env.GITTER_ACTIVITY_FUNNEL || '').split('|')
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET || 'same';
 
@@ -262,7 +266,7 @@ module.exports = (robot) ->
             messages.push(primg + vsprintf('`%1$s` %2$s the "__%4$s__" Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', parts))
 
         for travisid, parts of store[roomid].travis
-            console.log(travisid, parts)
+            console.log('travisid -->', travisid, parts)
 
             prDelayParts = store[roomid].prDelay[travisid]
             if prDelayParts
@@ -274,6 +278,14 @@ module.exports = (robot) ->
 
             if parts[2] == 'passed'
                 messages.push(travisOk + vsprintf('Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) has __passed__: [Travis %5$s](%4$s)', parts))
+
+                if prDelayParts[5]
+                    # add travis id to the delayed parts array to add to the message
+                    prDelayParts.push(parts[4]) # parts[4] -> %5$s
+
+                    # add a comment to the pull request with a demo url
+                    console.log('PR demo -->', prDelayParts[4], prDelayParts[5], prDelayParts)
+                    glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prDelayParts[4], vsprintf('I updated your PR Demo: [Build #%7$s](%6$s).', prDelayParts))
             else
                 messages.push(travisBroken + vsprintf('`%6$s` owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
 
