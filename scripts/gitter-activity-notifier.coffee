@@ -285,7 +285,7 @@ module.exports = (robot) ->
 
                     # add a comment to the pull request with a demo url
                     console.log('PR demo -->', prDelayParts[4], prDelayParts[5], prDelayParts)
-                    glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prDelayParts[4], vsprintf('I updated your PR Demo: [Build #%7$s](%6$s).', prDelayParts))
+                    glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prDelayParts[4], vsprintf('I updated your PR Demo: [Build #%7$s](%6$s). \r\n - [ ] Is demo working as expected?', prDelayParts))
             else
                 messages.push(travisBroken + vsprintf('`%6$s` owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
 
