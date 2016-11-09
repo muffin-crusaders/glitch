@@ -157,6 +157,9 @@ module.exports = (robot) ->
             m = text.match prDelay
             m.shift(1)
 
+            if m[1] == 'opened'
+                glitchpy.checkPrAssignee(m[2], m[4])
+
             url = 'https://api.github.com/repos/' + m[2] + '/pulls/' + m[4]
             console.log url
 

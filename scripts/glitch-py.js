@@ -14,6 +14,20 @@ module.exports = token => {
 
                 console.log('results: %j', results);
             });
+        },
+
+        checkPrAssignee: (repo, pull) => {
+            var options = {
+                // pythonPath: 'C:/tools/python2/python.exe',
+                args: [`-p ${pull}`, `-r ${repo}`, `-t ${token}`]
+            };
+
+            PythonShell.run('./scripts/check-pr-assignee.py', options, function (err, results) {
+                if (err) throw err;
+                // results is an array consisting of messages collected during execution
+
+                console.log('results: %j', results);
+            });
         }
     }
 };
