@@ -169,7 +169,7 @@ module.exports = (robot) ->
                     fbResponse = JSON.parse(body)
                     branchName = fbResponse.head.ref
                     user = fbResponse.user.login
-                    demourl = 'http://fgpv.cloudapp.net/demo/users/' + user + '/' + branchName + '/samples/index-one.html'
+                    demourl = 'http://fgpv.cloudapp.net/demo/users/' + user + '/' + branchName # + '/samples/index-one.html'
                     console.log 'Demo url', demourl, m[2], m[2].indexOf('/fgpv-vpgf')
 
                     # demo urls are only constructed for fgpv-vpgf repos
@@ -271,7 +271,7 @@ module.exports = (robot) ->
             prDelayParts = store[roomid].prDelay[travisid]
             if prDelayParts
                 parts.push(prDelayParts[0])
-                messages.push(primg + vsprintf('`%1$s` %2$s the "__%4$s__" Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s); [Demo](%6$s)', prDelayParts))
+                messages.push(primg + vsprintf('`%1$s` %2$s the "__%4$s__" Pull Request: %3$s#%5$s; [Reviewable %5$s](https://reviewable.io/reviews/%3$s/%5$s)', prDelayParts))
                 store[roomid].prDelay[travisid] = undefined # null delayed pr message
             else
                 parts.push('Someone')
@@ -279,13 +279,26 @@ module.exports = (robot) ->
             if parts[2] == 'passed'
                 messages.push(travisOk + vsprintf('Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) has __passed__: [Travis %5$s](%4$s)', parts))
 
-                if prDelayParts[5]
+                if prDelayParts and prDelayParts[5]
                     # add travis id to the delayed parts array to add to the message
                     prDelayParts.push(parts[4]) # parts[4] -> %5$s
 
                     # add a comment to the pull request with a demo url
                     console.log('PR demo -->', prDelayParts[4], prDelayParts[5], prDelayParts)
-                    glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prDelayParts[4], vsprintf('I updated your PR Demo: [Build #%7$s](%6$s). \r\n - [ ] Is demo working as expected?', prDelayParts))
+
+                    commentString = """
+                                    Hey, I updated your PR Demo (__Build #%7$s__):
+
+                                    | Dev Builds                      | Prod Builds                     |
+                                    | ------------------------------- | ------------------------------- |
+                                    | [index-one.html](%6$s/dev/samples/index-one.html)    | [index-one.html](%6$s/prod/samples/index-one.html)    |
+                                    | [index-fgp-en.html](%6$s/dev/samples/index-fgp-en.html) | [index-fgp-en.html](%6$s/prod/samples/index-fgp-en.html) |
+                                    | [index-fgp-fr.html](%6$s/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](%6$s/prod/samples/index-fgp-fr.html) |
+
+                                    Is it working as expected?
+                                    """
+
+                    glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prDelayParts[4], vsprintf(commentString, prDelayParts))
             else
                 messages.push(travisBroken + vsprintf('`%6$s` owes muffins now!!! :cake: Pull Request %1$s#%2$s ([Reviewable %2$s](https://reviewable.io/reviews/%1$s/%2$s)) is __broken__: [Travis %5$s](%4$s)', parts))
 
