@@ -18,13 +18,22 @@ module.exports = (robot) ->
     timeoutHandle = null
     timeoutDuration = process.env.GITTER_ACTIVITY_FUNNEL_DELAY || 10000;
 
-    primg = '![](https://goo.gl/hjqlaA)&nbsp;&nbsp;'
-    commentimg = '![](https://goo.gl/8IdEJl)&nbsp;&nbsp;'
-    infoimg = '![](https://goo.gl/9bHFwO)&nbsp;&nbsp;'
-    pushimg = '![](https://goo.gl/UHCtHx)&nbsp;&nbsp;'
-    travisOk = '![](https://goo.gl/0i3kmz)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/ok.png
-    travisBroken = '![](https://goo.gl/4RUx7z)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/mail-delete.png
-
+    primg = '![](http://bit.ly/2mN99Pg)&nbsp;&nbsp;'
+    commentimg = '![](http://bit.ly/2m05UVA)&nbsp;&nbsp;'
+    infoimg = '![](http://bit.ly/2ms9KTJ)&nbsp;&nbsp;'
+    pushimg = '![](http://bit.ly/2ms41wh)&nbsp;&nbsp;'
+    travisOk = '![](http://bit.ly/2mNf9qY)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/ok.png
+    travisBroken = '![](http://bit.ly/2n9KyFd)&nbsp;&nbsp;' #https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/mail-delete.png
+    
+    ###
+    https://cdn0.iconfinder.com/data/icons/octicons/1024/git-pull-request-16.png
+    https://cdn0.iconfinder.com/data/icons/octicons/1024/comment-16.png			
+    https://cdn0.iconfinder.com/data/icons/octicons/1024/info-16.png			
+    https://cdn0.iconfinder.com/data/icons/octicons/1024/repo-push-16.png		
+    https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/ok.png			
+    https://cdn2.iconfinder.com/data/icons/oxygen/16x16/actions/mail-delete.png	
+    ###
+    
     for roomName in roomNames
         #console.log(roomName)
         ###
