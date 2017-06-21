@@ -305,6 +305,7 @@ module.exports = (robot) ->
                                     | ------------------------------- | ------------------------------- |
                                     | [index-one.html](%6$s/dev/samples/index-one.html)    | [index-one.html](%6$s/prod/samples/index-one.html)    |
                                     | [index-mobile.html](%6$s/dev/samples/index-mobile.html)    | [index-mobile.html](%6$s/prod/samples/index-mobile.html)    |
+                                    | [index-mobile.html](%6$s/dev/samples/index-samples.html)    | [index-mobile.html](%6$s/prod/samples/index-samples.html)    |
                                     | [index-fgp-en.html](%6$s/dev/samples/index-fgp-en.html) | [index-fgp-en.html](%6$s/prod/samples/index-fgp-en.html) |
                                     | [index-fgp-fr.html](%6$s/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](%6$s/prod/samples/index-fgp-fr.html) |
 
