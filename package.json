@@ -14,7 +14,7 @@
     "coffee-script": "^1.10.0",
     "github": "^0.2.4",
     "hubot": "~2.15.0",
-    "hubot-azure-scripts": "git://github.com/muffin-crusaders/hubot-azure-scripts.git#master",
+    "hubot-azure-brain": "^1.0.0",
     "hubot-brain-inspect": "0.0.1",
     "hubot-diagnostics": "0.0.1",
     "hubot-gitter2": "muffin-crusaders/hubot-gitter2#develop",
