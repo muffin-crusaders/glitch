@@ -4,6 +4,9 @@
   "private": true,
   "author": "Spencer Wahl <spencer.wahl@ec.gc.ca>",
   "description": "beep boop",
+  "scripts": {
+    "start": "./bin/hubot -a gitter2 -n stable"
+  },
   "keywords": [
     "Hubot",
     "Node.js",
