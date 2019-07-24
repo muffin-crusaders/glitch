@@ -181,7 +181,7 @@ module.exports = (robot) ->
                     fbResponse = JSON.parse(body)
                     branchName = fbResponse.head.ref
                     user = fbResponse.user.login
-                    demourl = 'http://fgpv.cloudapp.net/demo/users/' + user + '/' + branchName # + '/samples/index-one.html'
+                    demourl = 'http://fgpv-app.azureedge.net/demo/users/' + user + '/' + branchName # + '/samples/index-one.html'
                     console.log 'Demo url', demourl, m[2], m[2].indexOf('/fgpv-vpgf')
 
                     # demo urls are only constructed for fgpv-vpgf repos
