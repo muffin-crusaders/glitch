@@ -186,6 +186,6 @@ module.exports = (robot) ->
             clearTimeout timeoutHandle
             timeoutHandle = setTimeout postMessages, timeoutDuration
 
-    res.send 'OK'
+        res.send 'OK'
 
     return
