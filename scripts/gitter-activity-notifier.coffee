@@ -8,6 +8,7 @@ path = require('path')
 glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HUBOT_PR_TOKEN)
 
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET;
+disabledIssueActions = ['labeled', 'unlabeled']
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
@@ -58,6 +59,9 @@ module.exports = (robot) ->
     postMessages = () ->
         for num, issue of store.issues
             debouncedMessages.push(makeIssueMessage(issue))
+
+        # Log messages for debugging purposes
+        console.log(debouncedMessages)
 
         robot.send
             room: notificationRoom
@@ -115,7 +119,7 @@ module.exports = (robot) ->
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
             if store.issues[issueNum]
-                if action !in store.issues[issueNum].actions
+                if action !in store.issues[issueNum].actions && action !in disabledIssueActions
                     store.issues[issueNum].actions.push(action)
             else
                 store.issues[issueNum] = {
@@ -169,7 +173,7 @@ module.exports = (robot) ->
 
                     Is it working as expected?
                     """
-                # glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prNum, commentString)
+                glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prNum, commentString)
             else
                 icon = travisBroken
 
@@ -181,5 +185,7 @@ module.exports = (robot) ->
         if flag
             clearTimeout timeoutHandle
             timeoutHandle = setTimeout postMessages, timeoutDuration
+
+    res.send 'OK'
 
     return
