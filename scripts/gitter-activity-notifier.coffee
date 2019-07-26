@@ -118,16 +118,17 @@ module.exports = (robot) ->
             title = body.issue.title
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
-            if store.issues[issueNum]
-                if action !in store.issues[issueNum].actions && action !in disabledIssueActions
-                    store.issues[issueNum].actions.push(action)
-            else
-                store.issues[issueNum] = {
-                    actions: [action]
-                    user: user
-                    title: title
-                    issue: issue
-                }
+            if action !in disabledIssueActions
+                if store.issues[issueNum]
+                    if action !in store.issues[issueNum].actions
+                        store.issues[issueNum].actions.push(action)
+                else
+                    store.issues[issueNum] = {
+                        actions: [action]
+                        user: user
+                        title: title
+                        issue: issue
+                    }
 
         else if  type == "issue_comment"
             action = body.action
@@ -173,7 +174,7 @@ module.exports = (robot) ->
 
                     Is it working as expected?
                     """
-                glitchpy.comment("fgpv-vpgf/fgpv-vpgf", prNum, commentString)
+                glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
             else
                 icon = travisBroken
 
