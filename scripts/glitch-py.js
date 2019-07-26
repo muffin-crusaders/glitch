@@ -1,33 +1,18 @@
-var PythonShell = require('python-shell');
+import Github from 'github-api'
 
 module.exports = token => {
+    const gh = new Github({ token: token })
+
     return {
-        comment: (repo, pull, message) => {
-            var options = {
-                // pythonPath: 'C:/tools/python2/python.exe',
-                args: [`-m ${message}`, `-p ${pull}`, `-r ${repo}`, `-t ${token}`]
-            };
-
-            PythonShell.run('./scripts/glitch-py.py', options, function (err, results) {
-                if (err) throw err;
-                // results is an array consisting of messages collected during execution
-
-                console.log('results: %j', results);
-            });
+        comment: (user, repo, pull, message) => {
+            const issues = gh.getIssues(user, repo);
+            issues.createIssueComment(pull, message);
         },
 
-        checkPrAssignee: (repo, pull) => {
-            var options = {
-                // pythonPath: 'C:/tools/python2/python.exe',
-                args: [`-p ${pull}`, `-r ${repo}`, `-t ${token}`]
-            };
-
-            PythonShell.run('./scripts/check-pr-assignee.py', options, function (err, results) {
-                if (err) throw err;
-                // results is an array consisting of messages collected during execution
-
-                console.log('results: %j', results);
-            });
+        checkPrAssignee: (repository, pull) => {
+            const [user, repo] = repository.split('/');
+            const issues = gh.getIssues(user, repo);
+            issues.createIssueComment(pull, `You forgot to assign your PR! It's a muffin offence, you know...`);
         }
     }
 };
