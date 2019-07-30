@@ -1,4 +1,4 @@
-#!/usr/bin/python
+""" #!/usr/bin/python
 
 import sys, getopt
 from github import Github
@@ -26,3 +26,4 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+ """
