@@ -1,8 +1,7 @@
-// import Github from 'github-api'
-GitHub = require('github-api');
+const github = require('github-api');
 
 module.exports = token => {
-    const gh = new Github({ token: token });
+    const gh = new github({ token: token });
 
     return {
         comment: (user, repo, pull, message) => {
