@@ -12,7 +12,11 @@ module.exports = token => {
         checkPrAssignee: (repository, pull) => {
             const [user, repo] = repository.split('/');
             const issues = gh.getIssues(user, repo);
-            issues.createIssueComment(pull, `You forgot to assign your PR! It's a muffin offence, you know...`);
+            gh.getIssue(pull, (pr) => {
+                if (pr.assignees.length === 0) {
+                    issues.createIssueComment(pull, `You forgot to assign your PR! It's a muffin offence, you know...`);
+                }
+            })
         }
     };
 };
