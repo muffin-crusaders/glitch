@@ -8,7 +8,8 @@ path = require('path')
 glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HUBOT_PR_TOKEN)
 
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET;
-disabledIssueActions = ['labeled', 'unlabeled']
+disabledIssueActions = ['pinned', 'unpinned', 'locked', 'unlocked', 'milestoned', 'demilestoned'];
+validLabels = ['priority: low', 'priority: medium', 'priority: high', 'priority: urgent'];
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
@@ -119,6 +120,10 @@ module.exports = (robot) ->
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
             if action !in disabledIssueActions
+                if action == "labeled" && body.label in validLabels
+                    action = "added `#{body.label}`"
+                else if action == "unlabeled" && body.label in validLabels
+                    action = "removed `#{body.label}`"
                 if store.issues[issueNum]
                     if action !in store.issues[issueNum].actions
                         store.issues[issueNum].actions.push(action)
