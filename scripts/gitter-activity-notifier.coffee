@@ -10,6 +10,7 @@ glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HU
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET;
 disabledIssueActions = ['pinned', 'unpinned', 'locked', 'unlocked', 'milestoned', 'demilestoned'];
 validLabels = ['priority: low', 'priority: medium', 'priority: high', 'priority: urgent'];
+noCheck = ['muffin-crusaders/glitch', 'muffin-crusaders/hubot-scrumminator', 'muffin-crusaders/static-website-blob-browser', 'muffin-crusaders/hubot-azure-scripts', 'muffin-crusaders/angularjs-styleguide-snippets-es6', '/muffin-crusaders/hubot-gitter2'];
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
@@ -99,7 +100,7 @@ module.exports = (robot) ->
                 }
                 if action == "opened"
                     glitchpy.checkPrAssignee(repo, prNum)
-                flag = false
+                flag = repo in noCheck
             else
                 flag = false
 
