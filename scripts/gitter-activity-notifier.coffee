@@ -162,25 +162,27 @@ module.exports = (robot) ->
             branch = store[sha].branch
             description = body.description
             travis_url = body.target_url
+            repo = body.name
             if body.state == "success"
                 icon = travisOk
 
-                 # Comment demos on PR
-                demourl = 'http://fgpv-app.azureedge.net/demo/users/' + user + '/' + branch
-                commentString = """
-                    Hey, I updated your PR Demo:
+                 # Comment demos on PR for FGPV repo only
+                if repo == "fgpv-vpgf/fgpv-vpgf"
+                    demourl = 'http://fgpv-app.azureedge.net/demo/users/' + user + '/' + branch
+                    commentString = """
+                        Hey, I updated your PR Demo:
 
-                    | Dev Builds                      | Prod Builds                     |
-                    | ------------------------------- | ------------------------------- |
-                    | [index-one.html](#{demourl}/dev/samples/index-one.html)    | [index-one.html](#{demourl}/prod/samples/index-one.html)    |
-                    | [index-mobile.html](#{demourl}/dev/samples/index-mobile.html)    | [index-mobile.html](#{demourl}/prod/samples/index-mobile.html)    |
-                    | [index-samples.html](#{demourl}/dev/samples/index-samples.html)    | [index-samples.html](#{demourl}/prod/samples/index-samples.html)    |
-                    | [index-fgp-en.html](#{demourl}/dev/samples/index-fgp-en.html) | [index-fgp-en.html](#{demourl}/prod/samples/index-fgp-en.html) |
-                    | [index-fgp-fr.html](#{demourl}/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](#{demourl}/prod/samples/index-fgp-fr.html) |
+                        | Dev Builds                      | Prod Builds                     |
+                        | ------------------------------- | ------------------------------- |
+                        | [index-one.html](#{demourl}/dev/samples/index-one.html)    | [index-one.html](#{demourl}/prod/samples/index-one.html)    |
+                        | [index-mobile.html](#{demourl}/dev/samples/index-mobile.html)    | [index-mobile.html](#{demourl}/prod/samples/index-mobile.html)    |
+                        | [index-samples.html](#{demourl}/dev/samples/index-samples.html)    | [index-samples.html](#{demourl}/prod/samples/index-samples.html)    |
+                        | [index-fgp-en.html](#{demourl}/dev/samples/index-fgp-en.html) | [index-fgp-en.html](#{demourl}/prod/samples/index-fgp-en.html) |
+                        | [index-fgp-fr.html](#{demourl}/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](#{demourl}/prod/samples/index-fgp-fr.html) |
 
-                    Is it working as expected?
-                    """
-                glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
+                        Is it working as expected?
+                        """
+                    glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
             else
                 icon = travisBroken
                 store[sha].message += ":rotating_light: EMERGENCY ALERT :rotating_light: `#{user}` has broken the :construction: build :construction: :construction_worker: :broken_heart: and owes muffins now!!! :cake:\n"
