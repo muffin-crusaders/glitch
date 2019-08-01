@@ -8,7 +8,9 @@ path = require('path')
 glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HUBOT_PR_TOKEN)
 
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET;
-disabledIssueActions = ['labeled', 'unlabeled']
+disabledIssueActions = ['pinned', 'unpinned', 'locked', 'unlocked', 'milestoned', 'demilestoned'];
+validLabels = ['priority: low', 'priority: medium', 'priority: high', 'priority: urgent'];
+noCheck = ['muffin-crusaders/glitch', 'muffin-crusaders/hubot-scrumminator', 'muffin-crusaders/static-website-blob-browser', 'muffin-crusaders/hubot-azure-scripts', 'muffin-crusaders/angularjs-styleguide-snippets-es6', '/muffin-crusaders/hubot-gitter2'];
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
@@ -98,7 +100,7 @@ module.exports = (robot) ->
                 }
                 if action == "opened"
                     glitchpy.checkPrAssignee(repo, prNum)
-                flag = false
+                flag = repo in noCheck
             else
                 flag = false
 
@@ -119,6 +121,10 @@ module.exports = (robot) ->
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
             if action !in disabledIssueActions
+                if action == "labeled" && body.label in validLabels
+                    action = "added `#{body.label}`"
+                else if action == "unlabeled" && body.label in validLabels
+                    action = "removed `#{body.label}`"
                 if store.issues[issueNum]
                     if action !in store.issues[issueNum].actions
                         store.issues[issueNum].actions.push(action)
@@ -156,25 +162,27 @@ module.exports = (robot) ->
             branch = store[sha].branch
             description = body.description
             travis_url = body.target_url
+            repo = body.name
             if body.state == "success"
                 icon = travisOk
 
-                 # Comment demos on PR
-                demourl = 'http://fgpv-app.azureedge.net/demo/users/' + user + '/' + branch
-                commentString = """
-                    Hey, I updated your PR Demo:
+                 # Comment demos on PR for FGPV repo only
+                if repo == "fgpv-vpgf/fgpv-vpgf"
+                    demourl = 'http://fgpv-app.azureedge.net/demo/users/' + user + '/' + branch
+                    commentString = """
+                        Hey, I updated your PR Demo:
 
-                    | Dev Builds                      | Prod Builds                     |
-                    | ------------------------------- | ------------------------------- |
-                    | [index-one.html](#{demourl}/dev/samples/index-one.html)    | [index-one.html](#{demourl}/prod/samples/index-one.html)    |
-                    | [index-mobile.html](#{demourl}/dev/samples/index-mobile.html)    | [index-mobile.html](#{demourl}/prod/samples/index-mobile.html)    |
-                    | [index-samples.html](#{demourl}/dev/samples/index-samples.html)    | [index-samples.html](#{demourl}/prod/samples/index-samples.html)    |
-                    | [index-fgp-en.html](#{demourl}/dev/samples/index-fgp-en.html) | [index-fgp-en.html](#{demourl}/prod/samples/index-fgp-en.html) |
-                    | [index-fgp-fr.html](#{demourl}/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](#{demourl}/prod/samples/index-fgp-fr.html) |
+                        | Dev Builds                      | Prod Builds                     |
+                        | ------------------------------- | ------------------------------- |
+                        | [index-one.html](#{demourl}/dev/samples/index-one.html)    | [index-one.html](#{demourl}/prod/samples/index-one.html)    |
+                        | [index-mobile.html](#{demourl}/dev/samples/index-mobile.html)    | [index-mobile.html](#{demourl}/prod/samples/index-mobile.html)    |
+                        | [index-samples.html](#{demourl}/dev/samples/index-samples.html)    | [index-samples.html](#{demourl}/prod/samples/index-samples.html)    |
+                        | [index-fgp-en.html](#{demourl}/dev/samples/index-fgp-en.html) | [index-fgp-en.html](#{demourl}/prod/samples/index-fgp-en.html) |
+                        | [index-fgp-fr.html](#{demourl}/dev/samples/index-fgp-fr.html) | [index-fgp-fr.html](#{demourl}/prod/samples/index-fgp-fr.html) |
 
-                    Is it working as expected?
-                    """
-                glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
+                        Is it working as expected?
+                        """
+                    glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
             else
                 icon = travisBroken
                 store[sha].message += ":rotating_light: EMERGENCY ALERT :rotating_light: `#{user}` has broken the :construction: build :construction: :construction_worker: :broken_heart: and owes muffins now!!! :cake:\n"
