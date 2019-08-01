@@ -177,6 +177,8 @@ module.exports = (robot) ->
                 glitchpy.comment("fgpv-vpgf", "fgpv-vpgf", prNum, commentString)
             else
                 icon = travisBroken
+                store[sha].message += ":rotating_light: EMERGENCY ALERT :rotating_light: `#{user}` has broken the :construction: build :construction: :construction_worker: :broken_heart: and owes muffins now!!! :cake:\n"
+
 
             debouncedMessages.push(store[sha].message + "#{icon} [#{description}](#{travis_url}) for Pull Request: #{pr} ([Reviewable #{prNum}](https://reviewable.io/reviews/#{repo}/#{prNum}))")
         else
