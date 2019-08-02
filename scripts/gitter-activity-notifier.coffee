@@ -91,16 +91,18 @@ module.exports = (robot) ->
                 debouncedMessages.push("#{primg} `#{user}` #{merged} the **\"#{title}\"** Pull Request: #{pr} ([Reviewable #{prNum}](https://reviewable.io/reviews/#{repo}/#{prNum}))")
             else if action in ["opened", "synchronized"]
                 sha = body.pull_request.head.sha
+                message = "#{primg} `#{user}` #{action} the **\"#{title}\"** Pull Request: #{pr} ([Reviewable #{prNum}](https://reviewable.io/reviews/#{repo}/#{prNum}))\n"
                 store[sha] = {
                     pr: pr
                     prNum: prNum
                     user: user
                     branch: branch
-                    message: "#{primg} `#{user}` #{action} the **\"#{title}\"** Pull Request: #{pr} ([Reviewable #{prNum}](https://reviewable.io/reviews/#{repo}/#{prNum}))\n"
+                    message: message
                 }
                 if action == "opened"
                     glitchpy.checkPrAssignee(repo, prNum)
-                flag = repo in noCheck
+                if repo in noCheck
+                    debouncedMessages.push(message)
             else
                 flag = false
 
