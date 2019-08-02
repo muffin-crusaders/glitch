@@ -122,10 +122,10 @@ module.exports = (robot) ->
             title = body.issue.title
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
-            if action == "labeled" && body.label in validLabels
-                action = "added `#{body.label}` to"
-            else if action == "unlabeled" && body.label in validLabels
-                action = "removed `#{body.label}` from"
+            if action == "labeled" && body.label.name in validLabels
+                action = "added `#{body.label.name}` to"
+            else if action == "unlabeled" && body.label.name in validLabels
+                action = "removed `#{body.label.name}` from"
 
             if action !in disabledIssueActions
                 if store.issues[issueNum]
