@@ -8,9 +8,9 @@ path = require('path')
 glitchpy = require( path.resolve( __dirname, "./glitch-py.js" ) )(process.env.HUBOT_PR_TOKEN)
 
 notificationRoom = process.env.GITTER_ACTIVITY_TARGET;
-disabledIssueActions = ['pinned', 'unpinned', 'locked', 'unlocked', 'milestoned', 'demilestoned'];
-validLabels = ['priority: low', 'priority: medium', 'priority: high', 'priority: urgent'];
-noCheck = ['muffin-crusaders/glitch', 'muffin-crusaders/hubot-scrumminator', 'muffin-crusaders/static-website-blob-browser', 'muffin-crusaders/hubot-azure-scripts', 'muffin-crusaders/angularjs-styleguide-snippets-es6', '/muffin-crusaders/hubot-gitter2'];
+disabledIssueActions = ["pinned", "unpinned", "locked", "unlocked", "milestoned", "demilestoned", "labeled", "unlabeled"];
+validLabels = ["priority: low", "priority: medium", "priority: high", "priority: urgent"];
+noCheck = ["muffin-crusaders/glitch", "muffin-crusaders/hubot-scrumminator", "muffin-crusaders/static-website-blob-browser", "muffin-crusaders/hubot-azure-scripts", "muffin-crusaders/angularjs-styleguide-snippets-es6", "/muffin-crusaders/hubot-gitter2"];
 
 module.exports = (robot) ->
     gitter = new Gitter(process.env.HUBOT_GITTER2_TOKEN)
@@ -120,11 +120,12 @@ module.exports = (robot) ->
             title = body.issue.title
             user = body.sender.login
             # if issue has has prior recent changes, combine them and prevent duplicates
+            if action == "labeled" && body.label in validLabels
+                action = "added `#{body.label}` to"
+            else if action == "unlabeled" && body.label in validLabels
+                action = "removed `#{body.label}` from"
+
             if action !in disabledIssueActions
-                if action == "labeled" && body.label in validLabels
-                    action = "added `#{body.label}`"
-                else if action == "unlabeled" && body.label in validLabels
-                    action = "removed `#{body.label}`"
                 if store.issues[issueNum]
                     if action !in store.issues[issueNum].actions
                         store.issues[issueNum].actions.push(action)
@@ -135,6 +136,8 @@ module.exports = (robot) ->
                         title: title
                         issue: issue
                     }
+            else
+                flag = false
 
         else if  type == "issue_comment"
             action = body.action
