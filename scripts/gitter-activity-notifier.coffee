@@ -101,8 +101,10 @@ module.exports = (robot) ->
                 }
                 if action == "opened"
                     glitchpy.checkPrAssignee(repo, prNum)
+                flag = false
                 if repo in noCheck
                     debouncedMessages.push(message)
+                    flag = true
             else
                 flag = false
 
